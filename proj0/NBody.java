@@ -77,14 +77,16 @@ public  class NBody {
             //创建一个 double 类型的数组 xForces，用于存储每个行星在 x 方向上的力。
             double[] yForces = new double[num];
             for(int i =0 ; i < num ; i++){
-                //遍历行星数组，计算每个行星在 x 和 y 方向上的力。
-                xForces[i] = planets[i].calcForceExertedByX(planets[i]);
-               /* 对于每个行星，调用 calcForceExertedByX 方法，传入当前行星对象，
-               计算它在 x 方向上的力，并存储在 xForces 数组中。
-                */
-
-                yForces[i] = planets[i].calcForceExertedByY(planets[i]);
+                xForces[i] = 0.0;
+                yForces[i] = 0.0;
+                for (int j = 0; j < num; j++) {
+                    if (i != j) { // 确保不是同一个行星
+                        xForces[i] += planets[i].calcForceExertedByX(planets[j]); // 计算i行星由j行星在X方向上施加的力
+                        yForces[i] += planets[i].calcForceExertedByY(planets[j]); // 计算i行星由j行星在Y方向上施加的力
+                    }
+                }
             }
+
             for(int i = 0; i < num; i++){
                 //再次遍历行星数组，更新每个行星的位置和速度。
                 planets[i].update(dt, xForces[i], yForces[i]);
