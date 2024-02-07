@@ -82,7 +82,22 @@ public class IntList {
 
     public static IntList dcatenate(IntList A, IntList B) {
         //TODO:  fill in method
-        return null;
+        if(A==null){
+            return B;
+        }
+        IntList ptr = A;
+        //创建一个 IntList 类型的变量 ptr，并将其初始化为列表 A 的引用。这个指针将用于遍历列表 A。
+        while(ptr.rest != null){
+            ptr  = ptr.rest;
+        }
+        ptr.rest = B;
+        /*
+        当 ptr 指向列表 A 的最后一个元素时（此时 ptr.rest 为 null），将这个元素的 rest 引用设置为列表 B。
+        这样，列表 A 的最后一个元素就指向了列表 B，实现了两个列表的连接。
+         */
+        return A;
+        //返回列表 A，现在它已经包含了原来 A 和 B 的所有元素。
+
     }
 
     /**
@@ -91,7 +106,22 @@ public class IntList {
      */
     public static IntList catenate(IntList A, IntList B) {
         //TODO:  fill in method
-        return null;
+       if(A == null){
+           return B;
+       }
+       if (A.rest == null){
+           return new IntList(A.first, B);
+           /*
+           如果 A.rest 是 null，这意味着 A 是一个只有一个元素的列表。
+           在这种情况下，创建一个新的 IntList 对象，包含 A.first（A 的第一个元素）和列表 B，然后返回这个新对象。
+            */
+       }
+       return new IntList(A.first, catenate(A.rest, B));
+       /*
+       如果 A 不是只有一个元素的列表，那么创建一个新的 IntList 对象，包含 A.first 和递归调用 catenate(A.rest, B) 的结果。
+       这个递归调用会处理 A 的剩余部分，直到 A.rest 为 null。然后返回这个新对象。
+        */
+
     }
 
 
